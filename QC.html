@@ -1,0 +1,32 @@
+<video id="webcam"></video>
+
+<script type="text/javascript">
+  function onSuccess(stream) {
+    var video = document.getElementById('webcam');
+    if (window.URL) {
+
+      try{
+        video.src = window.URL.createObjectURL(stream);
+      }catch (e){
+        console.log(e);
+        video.srcObject = stream;
+      }
+       
+  } else {
+    video.src = stream;
+  }
+
+  video.autoplay = true; 
+  // 或者 video.play();
+  }
+
+if (navigator.getUserMedia) {
+  navigator.getUserMedia({video:true}, onSuccess,onError);
+} else {
+  document.getElementById('webcam').src = 'somevideo.mp4';
+}
+
+function onError(error) {
+  console.log("navigator.getUserMedia error: ", error);
+}
+</script>
